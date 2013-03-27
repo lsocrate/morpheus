@@ -2,6 +2,8 @@
 lists = require('../utilities/lists.coffee')
 
 class Mortal
+  damagePriority = ['bashing', 'lethal']
+
   constructor: (@name) ->
     for attribute of lists.attributes
       @[attribute] = {dots: 1}
@@ -13,19 +15,22 @@ class Mortal
     @merits = []
     @flaws = []
     @willpower = {dots: 0, points: 0}
-    @damage =
+    @wounds =
       bashing: 0
       lethal: 0
 
   health: -> @size + @stamina.dots
 
+  damage: (type) ->
+    unless @wounds[type] >= @health()
+      @wounds[type]++
+    else
+      nextDamageCategory = damagePriority[damagePriority.indexOf(type) + 1]
+      @damage(nextDamageCategory)
+
   assignDamage: (damage, type) ->
-    switch type.toLowerCase()
-      when 'b'
-        @damage.bashing += parseInt(damage, 10)
-      when 'l'
-        @damage.lethal += parseInt(damage, 10)
-
-
+    while (damage > 0)
+      @damage(type.toLowerCase())
+      damage--
 
 module.exports = Mortal
