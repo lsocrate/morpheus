@@ -9,3 +9,8 @@ exports.test =
     mortal = new Mortal('John Doe')
     test.equal(mortal.name, 'John Doe')
     test.done()
+
+  'Get health': (test) ->
+    mortal = new Mortal('John Doe')
+    test.equal(6, mortal.health())
+    test.done()

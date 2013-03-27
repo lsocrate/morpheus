@@ -12,7 +12,8 @@ class Mortal
     @morality = 7
     @merits = []
     @flaws = []
-    @health = {dots: 0}
     @willpower = {dots: 0, points: 0}
+
+  health: -> @size + @stamina.dots
 
 module.exports = Mortal
