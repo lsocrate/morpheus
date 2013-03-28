@@ -1,6 +1,9 @@
 'use strict'
 lists = require('../utilities/lists.coffee')
 
+class Merit
+  constructor: (@name, @dots, @details) ->
+
 class Mortal
   damagePriority = ['bashing', 'lethal']
 
@@ -35,5 +38,11 @@ class Mortal
     while (damage > 0)
       @damage(type.toLowerCase())
       damage--
+
+  addMerit: (name, dots, details) ->
+    @merits.push(new Merit(name, dots, details))
+
+  getMerit: (name) ->
+    @merits.filter((merit) -> merit.name is name)
 
 module.exports = Mortal

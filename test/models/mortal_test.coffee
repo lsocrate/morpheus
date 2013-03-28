@@ -42,3 +42,10 @@ exports.test =
     test.equal(2, mortal.willpower.dots)
     test.equal(2, mortal.willpower.points)
     test.done()
+
+  'Gain merits': (test) ->
+    mortal = new Mortal('John Doe')
+    mortal.addMerit('Striking Looks', 2)
+    test.equal('Striking Looks', mortal.getMerit('Striking Looks')[0].name)
+    test.equal(2, mortal.getMerit('Striking Looks')[0].dots)
+    test.done()
