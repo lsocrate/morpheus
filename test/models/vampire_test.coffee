@@ -14,3 +14,8 @@ module.exports =
     @vampire.setClan(Vampire.DAEVA)
     test.equal(@vampire.clan, 'Daeva')
     test.done()
+
+  'Set covenant': (test) ->
+    @vampire.setCovenant(Vampire.THE_INVICTUS)
+    test.equal(@vampire.covenants[0], 'The Invictus')
+    test.done()
