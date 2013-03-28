@@ -14,12 +14,15 @@ class Mortal
     @morality = 7
     @merits = []
     @flaws = []
-    @willpower = {dots: 0, points: 0}
+    @willpower =
+      dots: @resolve.dots + @composure.dots
+      points: @resolve.dots + @composure.dots
     @wounds =
       bashing: 0
       lethal: 0
 
-  health: -> @size + @stamina.dots
+  health: ->
+    @size + @stamina.dots
 
   damage: (type) ->
     unless @wounds[type] >= @health()

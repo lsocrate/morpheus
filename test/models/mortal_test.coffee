@@ -36,3 +36,9 @@ exports.test =
     test.equal(1, mortal.wounds.lethal)
 
     test.done()
+
+  'Willpower': (test) ->
+    mortal = new Mortal('John Doe')
+    test.equal(2, mortal.willpower.dots)
+    test.equal(2, mortal.willpower.points)
+    test.done()
