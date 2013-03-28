@@ -49,3 +49,9 @@ exports.test =
     test.equal('Striking Looks', mortal.getMerit('Striking Looks')[0].name)
     test.equal(2, mortal.getMerit('Striking Looks')[0].dots)
     test.done()
+
+  'Gain flaws': (test) ->
+    mortal = new Mortal('John Doe')
+    mortal.addFlaw('Dwarf')
+    test.equal('Dwarf', mortal.flaws[0])
+    test.done()

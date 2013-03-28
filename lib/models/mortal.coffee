@@ -45,4 +45,7 @@ class Mortal
   getMerit: (name) ->
     @merits.filter((merit) -> merit.name is name)
 
+  addFlaw: (name) ->
+    @flaws.push(name)
+
 module.exports = Mortal
