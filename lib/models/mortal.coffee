@@ -1,11 +1,19 @@
 'use strict'
 lists = require('../utilities/lists.coffee')
+camelCase = require('../utilities/tools.coffee').camelCase
 
 class Merit
   constructor: (@name, @dots, @details) ->
 
 class Mortal
   damagePriority = ['bashing', 'lethal']
+
+  for attribute of lists.attributes
+    getter = camelCase('get', attribute)
+    @::[getter] = -> @[attribute]
+
+    setter = camelCase('set', attribute)
+    @::[setter] = (value) -> @[attribute].dots = value
 
   constructor: (@name) ->
     for attribute of lists.attributes
