@@ -1,19 +1,13 @@
 'use strict'
 lists = require('../utilities/lists.coffee')
 camelCase = require('../utilities/tools.coffee').camelCase
+events = require('events')
 
 class Merit
   constructor: (@name, @dots, @details) ->
 
-class Mortal
+class Mortal extends events.EventEmitter
   damagePriority = ['bashing', 'lethal']
-
-  for attribute of lists.attributes
-    getter = camelCase('get', attribute)
-    @::[getter] = -> @[attribute]
-
-    setter = camelCase('set', attribute)
-    @::[setter] = (value) -> @[attribute].dots = value
 
   constructor: (@name) ->
     for attribute of lists.attributes
@@ -25,12 +19,24 @@ class Mortal
     @morality = 7
     @merits = []
     @flaws = []
-    @willpower =
-      dots: @resolve.dots + @composure.dots
-      points: @resolve.dots + @composure.dots
     @wounds =
       bashing: 0
       lethal: 0
+    @calculateWillpower()
+
+    @on('staminaChange', (stamina) -> console.log(stamina))
+    @on('resolveChange', @calculateWillpower)
+    @on('composureChange', @calculateWillpower)
+
+  calculateWillpower: ->
+    @willpower =
+      dots: @resolve.dots + @composure.dots
+      points: @resolve.dots + @composure.dots
+
+  setAttribute: (attribute, value) ->
+    if @[attribute]
+      @[attribute].dots = Math.max(parseInt(value, 10), 1)
+      @emit(camelCase(attribute, 'change'), @[attribute])
 
   health: ->
     @size + @stamina.dots

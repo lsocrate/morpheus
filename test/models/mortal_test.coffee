@@ -1,18 +1,17 @@
 'use strict'
 Mortal = require('../../lib/models/mortal.coffee')
 
-exports.test =
+module.exports =
   setUp: (done) ->
+    @mortal = new Mortal('John Doe')
     done()
 
   'Create mortal': (test) ->
-    mortal = new Mortal('John Doe')
-    test.equal(mortal.name, 'John Doe')
+    test.equal(@mortal.name, 'John Doe')
     test.done()
 
   'Get health': (test) ->
-    mortal = new Mortal('John Doe')
-    test.equal(6, mortal.health())
+    test.equal(6, @mortal.health())
     test.done()
 
   'Assign damage': (test) ->
@@ -38,20 +37,25 @@ exports.test =
     test.done()
 
   'Willpower': (test) ->
-    mortal = new Mortal('John Doe')
-    test.equal(2, mortal.willpower.dots)
-    test.equal(2, mortal.willpower.points)
+    test.equal(2, @mortal.willpower.dots)
+    test.equal(2, @mortal.willpower.points)
     test.done()
 
   'Gain merits': (test) ->
-    mortal = new Mortal('John Doe')
-    mortal.addMerit('Striking Looks', 2)
-    test.equal('Striking Looks', mortal.getMerit('Striking Looks')[0].name)
-    test.equal(2, mortal.getMerit('Striking Looks')[0].dots)
+    @mortal.addMerit('Striking Looks', 2)
+    test.equal('Striking Looks', @mortal.getMerit('Striking Looks')[0].name)
+    test.equal(2, @mortal.getMerit('Striking Looks')[0].dots)
     test.done()
 
   'Gain flaws': (test) ->
-    mortal = new Mortal('John Doe')
-    mortal.addFlaw('Dwarf')
-    test.equal('Dwarf', mortal.flaws[0])
+    @mortal.addFlaw('Dwarf')
+    test.equal('Dwarf', @mortal.flaws[0])
+    test.done()
+
+  'Auto update willpower': (test) ->
+    oldWillpower = @mortal.willpower
+    @mortal.setAttribute('resolve', 3)
+    newWillpower = @mortal.willpower
+
+    test.notDeepEqual(oldWillpower, newWillpower)
     test.done()
