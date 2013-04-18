@@ -22,17 +22,14 @@ class Vampire extends Mortal
 
   setClan: (@clan) ->
     @emit('clanChange', @clan)
-    @
 
   setCovenant: (covenant) ->
     @covenants = [covenant]
     @emit('covenantChange', @covenants)
-    @
 
   joinCovenant: (covenant) ->
     @covenants.push(covenant)
     @emit('covenantChange', @covenants)
-    @
 
 
 module.exports = Vampire
