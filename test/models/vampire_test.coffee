@@ -21,7 +21,6 @@ module.exports =
     test.done()
 
   'Join covenant': (test) ->
-    @vampire.joinCovenant(Vampire.THE_INVICTUS)
-    @vampire.joinCovenant(Vampire.ORDO_DRACUL)
+    @vampire.joinCovenant(Vampire.THE_INVICTUS).joinCovenant(Vampire.ORDO_DRACUL)
     test.equal(@vampire.covenants.length, 2)
     test.done()
