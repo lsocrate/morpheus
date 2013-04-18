@@ -27,4 +27,9 @@ class Vampire extends Mortal
     @covenants = [covenant]
     @emit('covenantChange', @covenants)
 
+  joinCovenant: (covenant) ->
+    @covenants.push(covenant)
+    @emit('covenantChange', @covenants)
+
+
 module.exports = Vampire
