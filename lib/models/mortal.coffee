@@ -2,9 +2,8 @@
 lists = require('../utilities/lists.coffee')
 camelCase = require('../utilities/tools.coffee').camelCase
 events = require('events')
-
-class Merit
-  constructor: (@name, @dots, @details) ->
+Merit = require('./merit.coffee')
+Skill = require('./skill.coffee')
 
 class Mortal extends events.EventEmitter
   damagePriority = ['bashing', 'lethal']
@@ -13,7 +12,7 @@ class Mortal extends events.EventEmitter
     for attribute of lists.attributes
       @[attribute] = {dots: 1}
     for skill of lists.skills
-      @[skill] = {dots: 0, specialties: []}
+      @[skill] = new Skill(skill)
 
     @size = 5
     @morality = 7
